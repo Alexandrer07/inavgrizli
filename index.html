@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ГосУслуги Грозного</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f0ede8;
+      color: #3a3226;
+    }
+
+    /* HEADER */
+    header {
+      background: #8c6f5a;
+      color: #f5f0ea;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-icon { font-size: 28px; }
+    .logo-text {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .logo-sub {
+      font-size: 11px;
+      opacity: 0.75;
+      letter-spacing: 1px;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 13px;
+    }
+    .header-btn {
+      background: #c9a87c;
+      color: #3a3226;
+      border: none;
+      padding: 7px 18px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .header-btn:hover { background: #b8936a; }
+
+    /* NAV TABS */
+    nav {
+      background: #7a5f4d;
+      display: flex;
+      padding: 0 40px;
+      gap: 4px;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #e8ddd3;
+      padding: 13px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+      border-radius: 4px 4px 0 0;
+    }
+    nav button:hover {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+    nav button.active {
+      border-bottom: 3px solid #c9a87c;
+      color: #f5efe8;
+      background: rgba(255,255,255,0.1);
+      font-weight: 600;
+    }
+
+    /* CONTENT */
+    main {
+      max-width: 1100px;
+      margin: 36px auto;
+      padding: 0 24px;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* HERO BANNER */
+    .hero {
+      background: linear-gradient(135deg, #c9a87c 0%, #a07850 100%);
+      border-radius: 14px;
+      padding: 36px 44px;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .hero p {
+      font-size: 14px;
+      opacity: 0.88;
+      max-width: 420px;
+      line-height: 1.6;
+    }
+    .hero-emoji { font-size: 72px; }
+
+    /* CARDS GRID */
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #7a5f4d;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #d8cfc5;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform 0.18s, box-shadow 0.18s;
+      border: 1px solid #e8e0d8;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+    .card-icon { font-size: 32px; margin-bottom: 12px; }
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #3a3226;
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: #7a6e63;
+      line-height: 1.5;
+    }
+
+    /* NEWS */
+    .news-list { display: flex; flex-direction: column; gap: 14px; }
+    .news-item {
+      background: #fff;
+      border-radius: 10px;
+      padding: 18px 22px;
+      border: 1px solid #e8e0d8;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .news-icon { font-size: 28px; }
+    .
+[11.03.2026 20:59] Alexander: news-title { font-size: 14px; font-weight: 600; color: #3a3226; margin-bottom: 4px; }
+    .news-date { font-size: 11px; color: #a09080; margin-bottom: 6px; }
+    .news-text { font-size: 13px; color: #6a5c50; line-height: 1.55; }
+
+    /* FORM */
+    .form-wrap {
+      background: #fff;
+      border-radius: 14px;
+      padding: 32px 36px;
+      border: 1px solid #e8e0d8;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      max-width: 560px;
+    }
+    .form-wrap h2 {
+      font-size: 17px;
+      color: #5a3e2b;
+      margin-bottom: 20px;
+    }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: #7a6e63;
+      margin-bottom: 6px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #d8cfc5;
+      border-radius: 8px;
+      font-size: 14px;
+      background: #faf7f4;
+      color: #3a3226;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: #a07850;
+    }
+    .submit-btn {
+      background: #8c6f5a;
+      color: #fff;
+      border: none;
+      padding: 11px 32px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background: #7a5f4d; }
+    .form-note {
+      font-size: 11px;
+      color: #a09080;
+      margin-top: 14px;
+      font-style: italic;
+    }
+
+    /* ABOUT */
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .about-block {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px 26px;
+      border: 1px solid #e8e0d8;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    }
+    .about-block h3 {
+      font-size: 15px;
+      color: #7a5f4d;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .about-block p {
+      font-size: 13px;
+      color: #6a5c50;
+      line-height: 1.65;
+    }
+
+    /* DECREE MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 34px 38px;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    }
+    .modal h3 { font-size: 17px; color: #5a3e2b; margin-bottom: 12px; }
+    .modal p { font-size: 13px; color: #6a5c50; line-height: 1.6; margin-bottom: 18px; }
+    .modal-close {
+      background: #e8ddd3;
+      border: none;
+      padding: 9px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #5a3e2b;
+      font-weight: 600;
+    }
+    .modal-close:hover { background: #d8cfc5; }
+
+    /* FOOTER */
+    footer {
+      background: #7a5f4d;
+      color: #e8ddd3;
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      margin-top: 48px;
+      line-height: 1.8;
+    }
+    footer span { opacity: 0.6; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">👑</div>
+    <div>
+      <div class="logo-text">ГосУслуги Грозного</div>
+      <div class="logo-sub">ВСЕЯ РУСИ ЕДИНЫЙ ПОРТАЛ</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span>Добро пожаловать, боярин</span>
+    <button class="header-btn" onclick="openModal()">Подать жалобу царю</button>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <button class="active" onclick="switchTab('home', this)">🏠 Главная</button>
+  <button onclick="switchTab('services', this)">📜 Услуги</button>
+  <button onclick="switchTab('news', this)">📢 Указы</button>
+  <button onclick="switchTab('petition', this)">✉️ Челобитная</button>
+  <button onclick="switchTab('about', this)">⚔️ О царе</button>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- HOME TAB -->
+[11.03.2026 20:59] Alexander: <div id="home" class="tab-content active">
+    <div class="hero">
+      <div>
+        <h1>Портал государственных услуг Ивана Грозного</h1>
+        <p>Получайте царские услуги, не выходя из избы. Все опричники уже онлайн и готовы помочь вам с документами.</p>
+      </div>
+      <div class="hero-emoji">🏰</div>
+    </div>
+
+    <div class="section-title">Популярные услуги</div>
+    <div class="cards">
+      <div class="card" onclick="switchTabById('services')">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Регистрация холопа</div>
+        <div class="card-desc">Встать на учёт в государственный реестр крепостных. Срок — 3 рабочих века.</div>
+      </div>
+      <div class="card" onclick="switchTabById('services')">
+        <div class="card-icon">🗺️</div>
+        <div class="card-title">Земельный надел</div>
+        <div class="card-desc">Получить земельный участок в Сибири. Бесплатно. Правда, самостоятельно надо добраться.</div>
+      </div>
+      <div class="card" onclick="switchTabById('services')">
+        <div class="card-icon">⚔️</div>
+        <div class="card-title">Запись в опричники</div>
+        <div class="card-desc">Престижная государственная служба. Форма выдаётся. Чёрный конь — за свой счёт.</div>
+      </div>
+      <div class="card" onclick="switchTabById('petition')">
+        <div class="card-icon">📜</div>
+        <div class="card-title">Подать челобитную</div>
+        <div class="card-desc">Царь прочитает лично. Возможно. Скорее всего в течение ближайших 10–20 лет.</div>
+      </div>
+    </div>
+
+    <div class="section-title">Последние указы</div>
+    <div class="news-list">
+      <div class="news-item">
+        <div class="news-icon">📢</div>
+        <div>
+          <div class="news-title">Указ о переводе летоисчисления</div>
+          <div class="news-date">15 января 7090 года от сотворения мира</div>
+          <div class="news-text">Отныне все документы подавать в двух экземплярах — один себе, один в приказ. Писать разборчиво.</div>
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-icon">🏗️</div>
+        <div>
+          <div class="news-title">Покраска кремлёвских стен</div>
+          <div class="news-date">3 февраля 7090 года</div>
+          <div class="news-text">Работы завершены. Стены стали краше. Сметчик награждён. Подрядчик — тоже, по-своему.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES TAB -->
+  <div id="services" class="tab-content">
+    <div class="section-title">Все государственные услуги</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Регистрация холопа</div>
+        <div class="card-desc">Постановка на государственный учёт. Документы: свидетельство о происхождении и справка из деревни.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗺️</div>
+        <div class="card-title">Земельный надел</div>
+        <div class="card-desc">Выдача участков в Сибири, на Урале и прочих хороших местах. Приоритет — верным слугам царя.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚔️</div>
+        <div class="card-title">Запись в опричники</div>
+        <div class="card-desc">Принимаются грамотные, крепкие и преданные. Испытательный срок — один поход.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📖</div>
+        <div class="card-title">Выдача грамоты</div>
+        <div class="card-desc">Официальный документ с печатью царя. Подтверждает, что вы вообще существуете.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏰</div>
+        <div class="card-title">Разрешение на постройку</div>
+        <div class="card-desc">Построить избу, амбар, или маленькую крепость. Согласование с воеводой обязательно.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🐎</div>
+        <div class="card-title">Регистрация коня</div>
+        <div class="card-desc">Постановка животного на учёт. Приходить с конём. Конь должен быть спокойным.
+[11.03.2026 20:59] Alexander: </div>
+      </div>
+      <div class="card">
+        <div class="card-icon">💰</div>
+        <div class="card-title">Уплата налогов</div>
+        <div class="card-desc">Десятина принимается натурой: зерном, мехами, мёдом. Серебро тоже не откажем.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⛪</div>
+        <div class="card-title">Освящение постройки</div>
+        <div class="card-desc">Официальное благословение от государственного духовенства. Бесплатно для православных.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWS TAB -->
+  <div id="news" class="tab-content">
+    <div class="section-title">Царские указы и объявления</div>
+    <div class="news-list">
+      <div class="news-item">
+        <div class="news-icon">📜</div>
+        <div>
+          <div class="news-title">Указ №1: О переписи населения</div>
+          <div class="news-date">7089 год</div>
+          <div class="news-text">Всем гражданам явиться в приказ для переписи. Уклоняющимся — двойная десятина. Тройная — если очень заняты.</div>
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-icon">🏗️</div>
+        <div>
+          <div class="news-title">Указ №2: О строительстве Кремля</div>
+          <div class="news-date">7085 год</div>
+          <div class="news-text">Работы идут по плану. Архитекторы довольны. Мы ими тоже — пока. Срок сдачи продлён на пять лет.</div>
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-icon">⚖️</div>
+        <div>
+          <div class="news-title">Указ №3: О судебных спорах</div>
+          <div class="news-date">7088 год</div>
+          <div class="news-text">Все споры о земле решаются в Земском приказе. Споры о скоте — в Конюшенном. Споры с царём — не решаются.</div>
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-icon">🌾</div>
+        <div>
+          <div class="news-title">Указ №4: О сборе урожая</div>
+          <div class="news-date">7090 год</div>
+          <div class="news-text">Сбор урожая объявляется государственным делом. Зерно сдавать в закрома Родины. Остаток — по договорённости с воеводой.</div>
+        </div>
+      </div>
+      <div class="news-item">
+        <div class="news-icon">📬</div>
+        <div>
+          <div class="news-title">Объявление: Новый портал работает</div>
+          <div class="news-date">Сегодня</div>
+          <div class="news-text">ГосУслуги Грозного запущены. Технических сбоев нет. Ответственный за сбои назначен и уже предупреждён.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PETITION TAB -->
+  <div id="petition" class="tab-content">
+    <div class="section-title">Подача челобитной</div>
+    <div class="form-wrap">
+      <h2>📜 Форма обращения к государю</h2>
+      <div class="form-group">
+        <label>Ваше имя и чин</label>
+        <input type="text" placeholder="Напр.: Фёдор Кузьмич, кузнец" />
+      </div>
+      <div class="form-group">
+        <label>Откуда вы родом</label>
+        <input type="text" placeholder="Деревня, вотчина, уезд" />
+      </div>
+      <div class="form-group">
+        <label>Тип обращения</label>
+        <select>
+          <option>Просьба о милости</option>
+          <option>Жалоба на воеводу</option>
+          <option>Жалоба на соседа</option>
+          <option>Жалоба на соседского коня</option>
+          <option>Прошение о земле</option>
+          <option>Прочее</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Суть челобитной</label>
+        <textarea rows="5" placeholder="Излагайте суть коротко и по делу. Лирические отступления не приветствуются."></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitPetition()">Отправить государю</button>
+      <p class="form-note">* Царь рассматривает обращения в порядке очереди. Средний срок ответа — до 30 рабочих лет. Жалобы на самого царя не принимаются.</p>
+    </div>
+  </div>
+
+  <!-- ABOUT TAB -->
+  <div id="about" class="tab-content">
+    <div class="section-title">О государе и портале</div>
+[11.03.2026 20:59] Alexander: <div class="about-wrap">
+      <div class="about-block">
+        <h3>👑 Иван IV Васильевич</h3>
+        <p>Первый царь всея Руси, государственный деятель, реформатор, автор посланий и вдохновитель настоящего портала. Правил Россией с 1547 года, провёл земскую и судебную реформы, создал стрелецкое войско. По совместительству — первый опричник страны.</p>
+      </div>
+      <div class="about-block">
+        <h3>🏛️ О портале</h3>
+        <p>ГосУслуги Грозного — воображаемый цифровой портал государственных услуг Московского царства XVI века. Создан с любовью к истории и лёгкой иронией. Все совпадения с реальными историческими событиями намеренны и приветствуются.</p>
+      </div>
+      <div class="about-block">
+        <h3>📊 Показатели портала</h3>
+        <p>🗂 Зарегистрировано холопов: 4 821 904<br/>📜 Указов издано: 1 247<br/>✉️ Челобитных принято: 98 (остальные потеряны)<br/>⚔️ Опричников в сети: 18</p>
+      </div>
+      <div class="about-block">
+        <h3>📞 Приказы поддержки</h3>
+        <p>Земский приказ — пн–пт, с рассвета до заката<br/>Поместный приказ — по вторникам<br/>Опричный приказ — круглосуточно<br/><br/>Голубиная почта: <em>голубь@kremlin.ru</em></p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3>📜 Прямое обращение к царю</h3>
+    <p>Уважаемый государь Иван Васильевич!<br/><br/>Ваш портал принял жалобу. Царь ознакомится с ней лично — если будет в хорошем расположении духа. Вам пришлют уведомление голубиной почтой.</p>
+    <p style="font-size:12px; color:#a09080;">Номер обращения: ГУГ-7090-00042</p>
+    <button class="modal-close" onclick="closeModal()">Понятно, благодарю</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  👑 ГосУслуги Грозного — Единый портал государственных услуг Московского царства<br/>
+  <span>Все права защищены опричниками · 7090 год от сотворения мира · Технические вопросы — к стрельцам</span>
+</footer>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function switchTabById(id) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const idx = ['home','services','news','petition','about'].indexOf(id);
+    document.querySelectorAll('nav button')[idx].classList.add('active');
+  }
+
+  function openModal() {
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  function submitPetition() {
+    openModal();
+  }
+</script>
+</body>
+</html>
